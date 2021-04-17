@@ -1,0 +1,490 @@
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void push(int new_data, double pri, string Name, double selprice);
+string peek();
+void pop();
+void pop2(string name);
+void display();
+int returnCount();
+double returnCost();
+
+
+
+
+void pushBuf(int new_data, double pri, string Name, double selprice);
+void popBuf();
+void displayBuf();
+
+
+
+
+struct Goods {
+
+	int counter{};
+	double price{};
+	double SellPrice{};
+	string Name{};
+
+	struct Goods* next{};
+};
+
+struct Buf {
+	int counterB{};
+	double priceB{};
+	double SellPriceB{};
+	string NameB{};
+
+	struct Buf* nextB{};
+
+};
+
+
+
+struct Goods* First;
+struct Buf* FirstB;
+
+
+double profit;
+int howmany;
+double fullcost;
+
+
+
+
+int main()
+{
+
+	string NewName;
+	int NewCounter, N;
+	double NewPrice, SellPrice;
+	bool z = 1;
+
+	while (z)
+	{
+         cout <<"What do you want to do?\n 1.Add\n2.Sell\n3.Display\n4.Close\n";
+		cin >> N;
+
+		switch (N)
+		{
+		case 1:
+        {
+
+			cout << "Input Name" << " "; cin >> NewName; 
+			cout << "Input Count" << " "; cin >> NewCounter;
+			cout << "Input price" << " "; cin >> NewPrice; 
+			cout << "Input SellPrice" << " "; cin >> SellPrice; 
+
+			push(NewCounter, NewPrice, NewName, SellPrice);
+
+			cout << "Top Element it's " << peek() << endl;
+            display();
+			break;
+		}
+
+
+		case 2:
+		{             
+
+			int oldcounter, finalcounter,Bcounter;
+			double finalprice,Bprice,BSellPrice;
+			string Bname;
+
+		cout << "Input name: "; cin >> NewName; 
+		cout << "Input count: "; cin >> NewCounter;
+
+		if (First == NULL)
+		{cout << "\nQueue is empty" << endl; exit(1); break;}
+
+		else
+		{
+			struct Goods* temp;
+			struct Goods* temp2;
+            temp = First;
+			temp2 = First;
+			
+
+			while (temp != NULL)
+			{
+
+
+				if (temp->Name != NewName)
+				{
+					temp = temp->next;
+				}
+				else
+				{
+					//oldcounter = temp->counter;
+					//cout << "oldcounter " << oldcounter;
+					finalprice = temp->SellPrice - temp->price;
+					
+					if (temp->counter <= NewCounter)
+					{
+						cout << "We don't have so much\nYou will buy all.\n"; 
+						NewCounter = temp->counter;
+						profit += NewCounter * finalprice;
+
+						if (temp != First)
+						{
+							 while (temp2 != NULL)
+							{
+							    if(temp2->Name!=temp->Name)
+							    {
+								Bname = temp2->Name;
+								Bcounter = temp2->counter;
+								Bprice = temp2->price;
+								BSellPrice = temp2->SellPrice;
+
+								pushBuf(Bcounter, Bprice, Bname, BSellPrice);
+								pop;
+							    }
+							    else
+							    {pop;
+							    break;}
+								temp2 = temp2->next;
+								
+							}
+
+						}
+						displayBuf(); break;
+
+					}
+					else 
+					{
+						temp->counter -= NewCounter;
+						//finalcounter = temp->counter - NewCounter;
+						profit += NewCounter * finalprice;
+						
+						//if (temp->counter == 0)
+						//{
+							//pop;
+						//}
+						finalcounter = 0;
+						cout << "\t\t\nProfit = " << profit << endl;
+						break;
+					}
+				}
+			}
+		}
+		}
+
+
+
+		case 3:
+		{
+			cout << "\tNow you have:" << returnCount() << endl;
+			cout << "\tTotal price: " << returnCost() << endl;
+			cout << "\tTotal profit: " << profit << endl;
+			display();
+			displayBuf();
+
+		             break; }
+
+
+		case 4: {break; }
+		default: {break; }
+
+	}
+
+
+	}
+
+
+
+
+
+
+
+	return 0;
+}
+
+void push(int new_data, double pri, string Name, double selprice)
+{
+	if (First == NULL)
+	{
+		First = new Goods;
+		First->next = NULL;
+		First->counter = new_data;
+		First->price = pri;
+		First->SellPrice = selprice;
+		First->Name = Name;
+	}
+
+	else
+	{
+
+		struct Goods* temp;
+
+		temp = First;
+
+		while (temp->next != NULL)
+		{
+			temp = temp->next;
+		}
+
+
+		temp->next = new Goods;
+
+
+
+		temp->next->counter = new_data;
+		temp->next->price = pri;
+		temp->next->Name = Name;
+		temp->next->SellPrice = selprice;
+
+
+		temp->next->next = NULL; // 
+
+	}
+
+	cout << "\nNew element " << Name << " is added\n";
+}
+
+
+void pushBuf(int new_data, double pri, string Name, double selprice)
+{
+	if (FirstB == NULL)
+	{
+		FirstB = new Buf;
+		FirstB->nextB = NULL;
+		FirstB->counterB = new_data;
+		FirstB->priceB = pri;
+		FirstB->SellPriceB = selprice;
+		FirstB->NameB = Name;
+	}
+
+	else
+	{
+
+		struct Buf* tempB;
+
+		tempB = FirstB;
+
+		while (tempB->nextB != NULL)
+		{
+			tempB = tempB->nextB;
+		}
+
+
+		tempB->nextB = new Buf;
+
+
+
+		tempB->nextB->counterB = new_data;
+		tempB->nextB->priceB = pri;
+		tempB->nextB->NameB = Name;
+		tempB->nextB->SellPriceB = selprice;
+
+
+		tempB->nextB->nextB = NULL; // 
+
+	}
+
+	cout << "\nNew element " << Name << " is added to Buf\n";
+}
+
+
+
+
+string peek()
+{
+
+	if (First != NULL) {
+
+
+		return First->Name;
+	}
+	else
+	{
+		cout << "\nQueue is empty" << endl;
+
+		exit(1);
+	}
+}
+
+
+void pop()
+{
+
+	if (First == NULL) {
+		cout << "\nQueue is empty" << endl;
+
+		exit(1);
+	}
+	else {
+		struct Goods* temp;
+
+
+		temp = First->next;
+
+		cout << "Element " << First->Name << " is deleted" << endl;
+
+
+		free(First);
+
+
+		//First = temp;
+	}
+}
+
+
+void popBuf()
+{
+
+	if (FirstB == NULL) {
+		cout << "\nBuf is empty" << endl;
+
+		exit(1);
+	}
+	else {
+		struct Buf* temp;
+
+
+		temp = FirstB->nextB;
+
+		cout << "Element " << FirstB->NameB << " is deleted" << endl;
+
+
+		free(FirstB);
+
+
+		FirstB = temp;
+	}
+}
+
+void display()
+{
+
+	if (First == NULL)
+	{
+		cout << "\nQueue is empty" << endl;
+
+		exit(1);
+	}
+	else
+	{
+		struct Goods* temp;
+
+		temp = First;
+
+		cout << "\nCurrent queue:\n ";
+		while (temp != NULL)
+		{
+
+			cout << temp->Name <<":"<< "\n\tCounter: " << temp->counter <<
+				" \n\tPrice: " << temp->price << " \n\tSellPrice: " << temp->SellPrice << endl;
+
+
+
+
+			temp = temp->next;
+		}
+
+		cout << endl;
+	}
+}
+
+void displayBuf()
+{
+
+	if (FirstB == NULL)
+	{
+		cout << "\nBuf is empty" << endl;
+
+		exit(1);
+	}
+	else
+	{
+		struct Buf* temp;
+
+		temp = FirstB;
+
+		cout << "\nCurrent Buf:\n ";
+		while (temp != NULL)
+		{
+
+			cout << temp->NameB << ":" << "\n\tCounter: " << temp->counterB <<
+				" \n\tPrice: " << temp->priceB << " \n\tSellPrice: " << temp->SellPriceB << endl;
+
+
+
+
+			temp = temp->nextB;
+		}
+
+		cout << endl;
+	}
+}
+
+
+
+int returnCount()
+{
+	if (First == NULL)
+	{
+		cout << "\nQueue is empty" << endl; exit(1); return 0;
+	}
+
+	else
+	{
+		struct Goods* temp;
+		temp = First;
+		howmany = 0;
+
+
+		while (temp != NULL)
+		{
+			howmany = howmany + temp->counter;
+			//cout << howmany << endl;
+
+			temp = temp->next;
+		}
+
+
+		
+	}
+	return howmany;
+
+}
+
+
+double returnCost()
+{
+	if (First == NULL)
+	{
+		cout << "\nQueue is empty" << endl; exit(1); return 0;
+	}
+
+	else
+	{
+		struct Goods* temp;
+		temp = First;
+		fullcost = 0;
+
+
+
+		while (temp != NULL)
+		{
+			fullcost += temp->counter * temp->price;
+			//cout << howmany << endl;
+
+			temp = temp->next;
+		}
+
+
+
+	}
+	return fullcost;
+
+}
+
+
+
+
+
+
+
+
