@@ -1,0 +1,2 @@
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab 3(динамические структуры)\Lab 3 final working\ConsoleApplication2\Debug\ConsoleApplication2.exe
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab 3(динамические структуры)\Lab 3 final working\ConsoleApplication2\Debug\ConsoleApplication2.pdb
