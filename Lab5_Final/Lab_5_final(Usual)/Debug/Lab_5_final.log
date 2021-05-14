@@ -1,0 +1,8 @@
+﻿  Lab_5_final.cpp
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(307,14): warning C4101: FP: неиспользованная локальная переменная
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(308,10): warning C4101: FH: неиспользованная локальная переменная
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(304,12): warning C4101: FN: неиспользованная локальная переменная
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(407,14): warning C4552: "-": результат выражения не используется
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(435,15): warning C4552: "-": результат выражения не используется
+C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Lab_5_final.cpp(466,9): warning C4101: P: неиспользованная локальная переменная
+  Lab_5_final.vcxproj -> C:\Users\artem\Desktop\Институт\Языки_програмирования\Домашки и лабораторные\Lab5(Двусвязные списки)\Lab_5 _final\Lab_5_final\Debug\Lab_5_final.exe

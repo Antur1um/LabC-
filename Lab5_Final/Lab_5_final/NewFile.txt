@@ -1,0 +1,6 @@
+9012  BestWatch  1200.6   no 
+3847  Vostok  2567.77   yes 
+1234  Casio  3999.67   yes 
+5678  Casio  5000   yes 
+5766  Rolex  9999.99   yes 
+5555  Five  555555   yes 
