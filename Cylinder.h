@@ -1,74 +1,144 @@
+#ifndef CYLINDER_H
+#define CYLINDER_H
 #pragma once
 
-#include "2Dgeometry.h"
-#include "Exceptions.h" 
+#include "geometry.h"
+#include "Exceptions.h"
+#include <vector>
+#include <QString>
+
 
 
 class Cylinder
 {
-private:
-    Figure* f{};
-    double h{};
+
+
+
 protected:
-    Cylinder(double h)
+
+Figure* F{};
+double h{};
+
+
+    Cylinder(double h,Figure* f)
     {
 
-        cout << "Cylinder::Cylinder" << endl;
+    if(h>0)
+    {
         this->h = h;
+        F = f->Clone();
+
+       }
+
+    else{Exception e("Wrong height vlue"); throw e; }
+
+
     }
 
+    //void InitFigure(Figure* f);
 
-    void InitFigure(Figure* f);
- 
-    virtual Figure* CloneFigure(Figure* f) = 0;
+    //virtual Figure* CloneFigure(Figure* f) = 0;
 
 
 
 public:
-    virtual ~Cylinder() {}
-   
 
+
+    virtual unsigned short WhatType()=0;
+    virtual ~Cylinder() {delete F;}
     double CalcVolume();
-   
 
 
-
+    double GetH();
+    double GetSquare();
 
 };
+
+
+
 
 class CircleCylinder : public Cylinder
 {
-protected:
-    CircleCylinder(double h) :Cylinder(h) {}
-    virtual Figure* CloneFigure(Figure* f);
-   
-
-
 public:
-    static CircleCylinder* CreateInstance(Circle* f, double h);
-  
+       CircleCylinder(double, Figure*);
+
+       //void setRadius(double);
+       double GetR();
+        virtual unsigned short WhatType();
+
+
 
     virtual ~CircleCylinder() {}
- 
+
 
 };
+
+
 
 class TriangleCylinder : public Cylinder
 {
 
-protected:
-    TriangleCylinder(double h) :Cylinder(h){}
-    virtual Figure* CloneFigure(Figure* f);
- 
-
 public:
+    TriangleCylinder(double, Figure*);
 
-    static TriangleCylinder* CreateInstance(Triangle* f, double h);
+     virtual unsigned short WhatType();
+
+
+            double GetA();
+            double GetB();
+            double GetC();
+
 
     virtual ~TriangleCylinder() {}
 };
 
 
 
+class CylinderCollection
+
+{
+private:
+
+   unsigned short N=0;    // Счетчик Фигур
+
+   vector <Cylinder*> shape;
+
+public:
 
 
+
+
+    void AddCylinder(Cylinder*);
+      void delCylinder(int);
+
+    Cylinder* getCylinder(int);  // Получение фигуры по номеру
+    QString GetType(int);
+    double getNumber();
+
+     ~CylinderCollection();
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif // CYLINDER_H

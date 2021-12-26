@@ -1,4 +1,3 @@
-
 #pragma warning(disable : 4996)
 
 
@@ -14,6 +13,4 @@ using namespace std;
 //}
 
 const char* Exception::GetMessage() { return message; }
-int Exception::GetN() { return number; }
-
 

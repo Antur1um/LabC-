@@ -1,6 +1,7 @@
 #include "Cylinder.h"
-#include "2Dgeometry.h"
+#include "geometry.h"
 #include "Exceptions.h"
+
 
 
 
@@ -11,51 +12,115 @@
 #include <typeinfo>
 using namespace std;
 
-void Cylinder::InitFigure(Figure* f)
+
+
+
+// // // Cylinder // // //
+/*void Cylinder::InitFigure(Figure* f)
 {
-	this->f = CloneFigure(f);
-}
+    this->F = CloneFigure(f);
+}*/
+
+
 double Cylinder::CalcVolume()
 {
-	return (f->CalcSpace()) * h;
+    return (F->CalcSpace()) * h;
 }
 
+double Cylinder::GetH(){ return h;}
+
+double Cylinder::GetSquare(){return F->CalcSpace();}
+
+
+ // // // // CircleCylinder // // //
 
 
 
+CircleCylinder::CircleCylinder(double h, Figure* f):Cylinder(h,f){}
 
-
-
-Figure* CircleCylinder::CloneFigure(Figure* f)
+double CircleCylinder::GetR()
 {
-	Circle* c = static_cast<Circle*>(f);
-	return new Circle(c->GetR());
+
+    Circle* c = static_cast<Circle*>(F);
+        return c->GetR();
+
 }
-CircleCylinder* CircleCylinder::CreateInstance(Circle* f, double h)
+
+
+
+unsigned short CircleCylinder::WhatType(){return 0;}
+
+
+
+// // // //Triangle cylinder // // // //
+
+TriangleCylinder::TriangleCylinder(double h,Figure* f):Cylinder(h,f){};
+
+double TriangleCylinder::GetA()
 {
-	if (h <= 0) { Exception e = Exception(h, "Error in CircleCylinder"); throw e; }
-	CircleCylinder* circleCylinder = new CircleCylinder(h);
-	circleCylinder->InitFigure(f);
-	return circleCylinder;
+   Triangle* b =  static_cast<Triangle*>(F);
+   return b->GetA();
 }
 
-
-
-
-
-
-
-Figure* TriangleCylinder::CloneFigure(Figure* f)
+double TriangleCylinder::GetB()
 {
-	Triangle* t = static_cast<Triangle*>(f);
-	return new Triangle(t->GetA(), t->GetB(), t->GetC());
+   Triangle* b =  static_cast<Triangle*>(F);
+   return b->GetB();
 }
 
-TriangleCylinder* TriangleCylinder::CreateInstance(Triangle* f, double h)
+double TriangleCylinder::GetC()
 {
-	if (h <= 0) { Exception e = Exception(h, "Error in TriangleCylinder"); throw e; }
-
-	TriangleCylinder* trianglecylinder = new TriangleCylinder(h);
-	trianglecylinder->InitFigure(f);
-	return trianglecylinder;
+   Triangle* b =  static_cast<Triangle*>(F);
+   return b->GetC();
 }
+
+
+unsigned short TriangleCylinder::WhatType(){return 1;}
+
+
+
+
+
+
+// // // Cylinder collection // // // //
+
+
+
+Cylinder* CylinderCollection::getCylinder(int n)
+{
+   return shape[n];
+}
+
+double CylinderCollection::getNumber()
+{
+    return N;
+}
+void  CylinderCollection::AddCylinder(Cylinder* new_shape)
+{
+     N++;
+
+     shape.emplace_back(new_shape);
+}
+
+void CylinderCollection::delCylinder(int number)
+{
+
+       shape.erase(shape.cbegin()+number);
+       N--;
+
+}
+
+CylinderCollection::~CylinderCollection()
+{
+    shape.clear();
+    shape.shrink_to_fit();
+}
+
+
+
+
+
+
+
+
+

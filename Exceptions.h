@@ -1,3 +1,6 @@
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
+
 #pragma once
 
 
@@ -9,18 +12,19 @@ class Exception
 {
 
 private:
-    int number;
+
     const char* message;
 
 public:
 
-    Exception(int n, const char* m) : number(n), message(m)
+    Exception(const char* m) :  message(m)
     {
         cout << "Exception created\n";
     }
     const char* GetMessage();
-    int GetN();
+
 
 
 };
 
+#endif // EXCEPTIONS_H
