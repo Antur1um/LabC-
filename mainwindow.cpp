@@ -59,12 +59,18 @@ void MainWindow::on_comboBox_currentTextChanged(const QString &arg1 )
 
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked() // Произошло нажатие на кнопку delete
 {
-    if(col->getNumber()!=0)
+    if(col->getNumber()>=0)
     {
-col->delCylinder(col->getNumber()-1);
-ui->statusbar->showMessage("Cylinder deleted");
+        col->DelCylinder();
+
+        QString t = QString::number(col->getNumber());
+        ui->statusbar->showMessage(t);
+
+
+
+
     }
 
     else
@@ -74,10 +80,8 @@ ui->statusbar->showMessage("Cylinder deleted");
 }
 
 
- void MainWindow::on_pushButton_2_clicked()
+ void MainWindow::on_pushButton_2_clicked() // Произошло нажатие на кнопку Add
  {
-
-    // Произошло нажатие на кнопку Add
 
      try
      {
@@ -90,7 +94,7 @@ ui->statusbar->showMessage("Cylinder deleted");
          a=ui->lineEdit->text().toDouble();
           b=ui->lineEdit_2->text().toDouble();
              c=ui->lineEdit_3->text().toDouble();
-              h=ui->lineEdit_4->text().toDouble();
+              h=ui->lineEdit_4->text().toDouble(); //собрали то что лежит в данных
 
 
 
@@ -99,9 +103,15 @@ ui->statusbar->showMessage("Cylinder deleted");
               Cylinder* cyl = new TriangleCylinder(h,base);\
 
             col->AddCylinder(cyl);
-             ui->statusbar->showMessage("Triangle cylinder added to collection");
 
-            delete base;
+              QString t = QString::number(col->getNumber());
+              ui->statusbar->showMessage(t);
+
+             //ui->statusbar->showMessage("Triangle cylinder added to collection");
+
+
+            //delete base;
+             //delete cyl;
 
          }
 
@@ -120,13 +130,17 @@ ui->statusbar->showMessage("Cylinder deleted");
          col->AddCylinder(cyl);
          ui->statusbar->showMessage("Circle cylinder added to collection");
 
+
          QString t = QString::number(col->getNumber());
+
+
 
 
          ui->statusbar->showMessage("Now you have: ");
          ui->statusbar->showMessage(t);
 
-         delete base;
+         //delete base;
+         //delete cyl;
          }
 }
 
@@ -135,151 +149,6 @@ ui->statusbar->showMessage("Cylinder deleted");
 
 
  }
-
-
-
-void MainWindow::on_pushButton_3_clicked()
-{
-
-if(col->getNumber()-1>=1)
-{
-
-    Cylinder* Cyl = col->getCylinder(col->getNumber()-1);
-
-
-    if(Cyl->WhatType() == 0)
-    {
-        DisplayMenu("Circle cylinder");
-
-        CircleCylinder* Cir = static_cast<CircleCylinder*>(Cyl);
-
-    QString S = QString::number(Cir->GetSquare());
-    QString V = QString::number(Cir->CalcVolume());
-    QString R = QString::number(Cir->GetR());
-     QString H = QString::number(Cir->GetH());
-
-
-        ui->label_2->setText(S);
-        ui->label_4->setText(V);
-
-        ui->lineEdit->setText(R);
-        ui->lineEdit_3->setText(H);
-
-        DrawCylinder(Cir->GetR(),Cir->GetH());
-
-
-        delete Cir;
-      }
-
-    else if(Cyl->WhatType()==1)
-    {
-        DisplayMenu("Triangle cylinder");
-
-         TriangleCylinder* Tri  = static_cast<TriangleCylinder*>(Cyl);
-
-         QString s = QString::number(Tri->GetSquare());
-         QString v = QString::number(Tri->CalcVolume());
-
-         QString A = QString::number(Tri->GetA());
-         QString B = QString::number(Tri->GetB());
-         QString C = QString::number(Tri->GetC());
-         QString h = QString::number(Tri->GetH());
-
-
-
-             ui->label_2->setText(s);
-             ui->label_4->setText(v);
-
-
-             ui->lineEdit->setText(A);
-             ui->lineEdit_2->setText(B);
-             ui->lineEdit_3->setText(C);
-             ui->lineEdit_4->setText(h);
-
-             DrawTrianglePrism(Tri->GetA(),Tri->GetB(),Tri->GetC(), Tri->GetH());
-
-             delete Tri;
-
-         }
-       }
-
-    else{ErrorMes("Next element does not exist");}
-
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-
- void MainWindow::on_pushButton_4_clicked() // Отслеживаем нажатия кнопки Next
- {
-     if(col->getNumber()+1 >= 2)
-     {
-
-     Cylinder* Cyl = col->getCylinder(col->getNumber()+1);
-
-
-     if(Cyl->WhatType() == 0)
-     {
-         DisplayMenu("Circle cylinder");
-
-         CircleCylinder* Cir = static_cast<CircleCylinder*>(Cyl);
-
-     QString S = QString::number(Cir->GetSquare());
-     QString V = QString::number(Cir->CalcVolume());
-     QString R = QString::number(Cir->GetR());
-      QString H = QString::number(Cir->GetH());
-
-
-         ui->label_2->setText(S);
-         ui->label_4->setText(V);
-
-         ui->lineEdit->setText(R);
-         ui->lineEdit_3->setText(H);
-
-
-         delete Cir;
-       }
-
-     else if(Cyl->WhatType()==1)
-     {
-         DisplayMenu("Triangle cylinder");
-
-          TriangleCylinder* Tri  = static_cast<TriangleCylinder*>(Cyl);
-
-          QString s = QString::number(Tri->GetSquare());
-          QString v = QString::number(Tri->CalcVolume());
-
-          QString A = QString::number(Tri->GetA());
-          QString B = QString::number(Tri->GetB());
-          QString C = QString::number(Tri->GetC());
-          QString h = QString::number(Tri->GetH());
-
-
-
-              ui->label_2->setText(s);
-              ui->label_4->setText(v);
-
-
-              ui->lineEdit->setText(A);
-              ui->lineEdit_2->setText(B);
-              ui->lineEdit_3->setText(C);
-              ui->lineEdit_4->setText(h);
-
-          }
-        }
-
-     else{ErrorMes("Next element does not exist");}
-
-       }
 
 
 
@@ -300,7 +169,7 @@ if(col->getNumber()-1>=1)
 
 QString h = ui->comboBox->currentText();
 
-try{
+
 
   if(h=="Triangle")
   {
@@ -333,26 +202,113 @@ try{
       {DrawCylinder(ui->lineEdit->text().toDouble(),ui->lineEdit_2->text().toDouble());}
   }
 
+
+
+
+
+
+
+
+
+
+
 }
 
-catch(Exception e)
+void MainWindow::on_pushButton_6_clicked() // отслеживаем нажатия на кнопку Display cylinder
 {
-    ErrorMes(e.GetMessage());
+
+
+ if(ui->lineEdit_5->text().toInt()<=col->getNumber() && ui->lineEdit_5->text().toInt() >= 0 )
+  {
+
+
+   if(col->GetCylinder(ui->lineEdit_5->text().toInt())->WhatType() == 0)
+   {
+       DisplayMenu("Circle cylinder");
+
+
+       CircleCylinder* Cir = static_cast<CircleCylinder*>(col->GetCylinder(ui->lineEdit_5->text().toInt()));
+
+   QString S = QString::number(Cir->GetSquare());
+   QString V = QString::number(Cir->CalcVolume());
+   QString R = QString::number(Cir->GetR());
+    QString H = QString::number(Cir->GetH());
+
+
+       ui->label_2->setText(S);
+       ui->label_4->setText(V);
+
+       ui->lineEdit->setText(R);
+       ui->lineEdit_2->setText(H);
+
+       DrawCylinder(Cir->GetR(),Cir->GetH());
+
+       QString t = QString::number(col->getNumber());
+       ui->statusbar->showMessage(t);
+
+
+       //delete Cir;
+       //delete Cyl;
+     }
+
+
+   else if(col->GetCylinder(ui->lineEdit_5->text().toInt())->WhatType() == 1)
+   {
+
+
+
+       DisplayMenu("Triangle cylinder");
+
+        TriangleCylinder* Tri  = static_cast<TriangleCylinder*>(col->GetCylinder(ui->lineEdit_5->text().toInt()));
+
+        QString s = QString::number(Tri->GetSquare());
+        QString v = QString::number(Tri->CalcVolume());
+
+        QString A = QString::number(Tri->GetA());
+        QString B = QString::number(Tri->GetB());
+        QString C = QString::number(Tri->GetC());
+        QString h = QString::number(Tri->GetH());
+
+
+
+            ui->label_2->setText(s);
+            ui->label_4->setText(v);
+
+
+            ui->lineEdit->setText(A);
+            ui->lineEdit_2->setText(B);
+            ui->lineEdit_3->setText(C);
+            ui->lineEdit_4->setText(h);
+
+
+            QString t = QString::number(col->getNumber());
+            ui->statusbar->showMessage(t);
+
+
+            DrawTrianglePrism(Tri->GetA(),Tri->GetB(),Tri->GetC(),Tri->GetH());
+
+            //delete Tri;
+            //delete Cyl;
+
+        }
+
+ }
+
+ else{ErrorMes("No such cylinder");}
+
+
+
+
 
 
 
 }
 
 
-}
 
 
 
-
-
-
-
-//Отображение окна
+//Отображение окна и отрисовка фигур
 
 void MainWindow::Update_Menu()
 {
@@ -646,9 +602,19 @@ void MainWindow::DisplayMenu(QString t)
 void MainWindow::DrawTrianglePrism(double a, double b, double c, double h )
 {
 
+    if(paper!= nullptr)
+             {
+                delete paper;
+                paper = nullptr;
+             }
+
    paper = new QGraphicsScene(this);
 
         ui->graphicsView->setScene(paper);
+
+
+
+
 
         QPen blackpen(Qt::black);
            blackpen.setWidth(2);
@@ -711,18 +677,25 @@ void MainWindow::DrawTrianglePrism(double a, double b, double c, double h )
 
 void MainWindow::DrawCylinder(double r, double h)
 {
+
+    if(paper!= nullptr)
+             {
+                delete paper;
+                paper = nullptr;
+             }
+
     paper = new QGraphicsScene(this);
 
     ui->graphicsView->setScene(paper);
 
     QPen blackpen(Qt::black);
     blackpen.setWidth(2);
-    blackpen.setColor("#000000");
+    blackpen.setColor("#00000");
 
     QPen dotpen(Qt::black);
     dotpen.setStyle(Qt::DotLine);
     dotpen.setWidth(2);
-    dotpen.setColor("#000000");
+    dotpen.setColor("#00000");
 
     if(h>=r*2)
     {

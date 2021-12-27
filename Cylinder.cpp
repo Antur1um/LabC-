@@ -47,7 +47,6 @@ double CircleCylinder::GetR()
 }
 
 
-
 unsigned short CircleCylinder::WhatType(){return 0;}
 
 
@@ -86,7 +85,7 @@ unsigned short TriangleCylinder::WhatType(){return 1;}
 
 
 
-Cylinder* CylinderCollection::getCylinder(int n)
+Cylinder* CylinderCollection::GetCylinder(int n)
 {
    return shape[n];
 }
@@ -95,18 +94,22 @@ double CylinderCollection::getNumber()
 {
     return N;
 }
+
 void  CylinderCollection::AddCylinder(Cylinder* new_shape)
 {
-     N++;
 
      shape.emplace_back(new_shape);
+
+     N = shape.size()-1; // Номер установлен на последний элемент
+
+
 }
 
-void CylinderCollection::delCylinder(int number)
+void CylinderCollection::DelCylinder()
 {
 
-       shape.erase(shape.cbegin()+number);
-       N--;
+       shape.pop_back();
+       N = shape.size()-1;
 
 }
 

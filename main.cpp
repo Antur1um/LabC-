@@ -10,12 +10,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.setWindowTitle("Geometry");
     w.show();
-
-
-
-
-
-
-
     return a.exec();
 }

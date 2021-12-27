@@ -99,8 +99,8 @@ class CylinderCollection
 {
 private:
 
-   unsigned short N=0;    // Счетчик Фигур
-
+       // Текущий элемент
+unsigned short N=-1;
    vector <Cylinder*> shape;
 
 public:
@@ -108,11 +108,10 @@ public:
 
 
 
-    void AddCylinder(Cylinder*);
-      void delCylinder(int);
+    void AddCylinder(Cylinder*); //Добавление элелемента
+    void DelCylinder(); // Удаление последнего элемента
+    Cylinder* GetCylinder(int);  // Получение фигуры по номеру
 
-    Cylinder* getCylinder(int);  // Получение фигуры по номеру
-    QString GetType(int);
     double getNumber();
 
      ~CylinderCollection();

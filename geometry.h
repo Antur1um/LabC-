@@ -57,7 +57,7 @@ private:
    double A, B, C;
 public:
 
-    Triangle(double a = 5, double b = 5, double c = 2)
+    Triangle(double a , double b , double c )
     {
         if (!TestMySides(a, b, c))
         {
